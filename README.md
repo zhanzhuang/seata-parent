@@ -1,2 +1,1 @@
-# seata_demo
-seata demo
+# readme
