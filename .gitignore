@@ -1,0 +1,4 @@
+.idea
+*.iml
+seata-bank1/target
+seata-bank2/target
