@@ -17,14 +17,15 @@ public class CodeGenerator {
                 )
                 .packageConfig(builder ->
                         builder
-                                .parent("")
-                                .moduleName("com.jensen.seatabank1")
+                                .parent("com.jensen")
+                                .moduleName("seatabank1")
+                                .entity("model.entity")
                                 .pathInfo(Collections.singletonMap(OutputFile.mapperXml, System.getProperty("user.dir") + "/seata-bank1/src/main/resources/mapper"))
                 )
                 .strategyConfig(builder ->
                         builder
                                 .addInclude("b1_bank")
-//                                .addTablePrefix("t_")
+//                                .addInclude("other_table")
                 )
                 .execute();
     }
