@@ -1,13 +1,9 @@
-package com.jensen.seatabank1.controller;
+package com.jensen.seatabank2.controller;
 
 
-import com.jensen.seatabank1.model.entity.B1Bank;
-import com.jensen.seatabank1.service.IB1BankService;
+import com.jensen.seatabank2.model.entity.B2Bank;
+import com.jensen.seatabank2.service.IB2BankService;
 import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * <p>
@@ -29,19 +24,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/bankController")
 @RequiredArgsConstructor
-public class B1BankController {
+public class B2BankController {
 
-    private final IB1BankService ib1BankService;
+    private final IB2BankService ib2BankService;
 
     @GetMapping("/selectBank")
-    public List<B1Bank> selectBank() {
-        return ib1BankService.selectBank();
+    public B2Bank selectBank() {
+        return ib2BankService.selectBank();
     }
 
     @GetMapping("/updateBank")
     public int updateBank(@RequestParam BigDecimal amount) {
-        return ib1BankService.updateBank(amount);
+        return ib2BankService.updateBank(amount);
     }
+
 
 }
 
