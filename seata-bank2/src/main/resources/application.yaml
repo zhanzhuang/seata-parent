@@ -1,8 +1,6 @@
 spring:
   profiles:
     active: dev
-  application:
-    name: seata-bank2
 
 ---
 spring:
@@ -14,8 +12,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: cb196225-eceb-4f3e-a609-74308a80e165
+        enabled: true
 server:
-  port: 8081
+  port: 8082
 mybatis-plus:
   mapper-locations: calsspath:mapper/*.xml

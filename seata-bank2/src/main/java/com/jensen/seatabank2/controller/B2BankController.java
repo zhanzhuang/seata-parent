@@ -4,12 +4,9 @@ package com.jensen.seatabank2.controller;
 import com.jensen.seatabank2.model.entity.B2Bank;
 import com.jensen.seatabank2.service.IB2BankService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
@@ -33,9 +30,9 @@ public class B2BankController {
         return ib2BankService.selectBank();
     }
 
-    @GetMapping("/updateBank")
-    public int updateBank(@RequestParam BigDecimal amount) {
-        return ib2BankService.updateBank(amount);
+    @PostMapping("/updateBank")
+    public int updateBank(@RequestBody B2Bank bank) {
+        return ib2BankService.updateBank(bank.getAccountBalance());
     }
 
 

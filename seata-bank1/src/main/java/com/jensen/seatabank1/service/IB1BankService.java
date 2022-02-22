@@ -18,5 +18,5 @@ public interface IB1BankService extends IService<B1Bank> {
 
     List<B1Bank> selectBank();
 
-    int updateBank(BigDecimal amount);
+    String updateBank(B1Bank bank);
 }

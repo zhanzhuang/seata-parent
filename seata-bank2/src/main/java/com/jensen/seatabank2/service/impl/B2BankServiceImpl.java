@@ -34,11 +34,18 @@ public class B2BankServiceImpl extends ServiceImpl<B2BankMapper, B2Bank> impleme
 
     @Override
     public int updateBank(BigDecimal amount) {
-        int update = b2BankMapper.update(null, new UpdateWrapper<B2Bank>().lambda()
-                .eq(B2Bank::getAccountNumber, "123")
-                .setSql("account_balance = account_balance - " + amount));
+        B2Bank b2Bank = b2BankMapper.selectOne(new LambdaQueryWrapper<B2Bank>()
+                .eq(B2Bank::getAccountNumber, "456"));
+        BigDecimal newBalance = b2Bank.getAccountBalance().add(amount);
 
-        return update;
+        int update = b2BankMapper.update(null, new UpdateWrapper<B2Bank>().lambda()
+                .eq(B2Bank::getAccountNumber, "456")
+                .set(B2Bank::getAccountBalance, newBalance));
+        if (update > 0) {
+            return -1;
+        } else {
+            return newBalance.intValue();
+        }
     }
 
 }

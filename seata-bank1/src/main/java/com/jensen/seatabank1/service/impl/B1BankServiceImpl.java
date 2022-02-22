@@ -2,6 +2,7 @@ package com.jensen.seatabank1.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.jensen.seatabank1.feign.FeignClientSeataBank2;
 import com.jensen.seatabank1.model.entity.B1Bank;
 import com.jensen.seatabank1.mapper.B1BankMapper;
 import com.jensen.seatabank1.service.IB1BankService;
@@ -27,6 +28,8 @@ public class B1BankServiceImpl extends ServiceImpl<B1BankMapper, B1Bank> impleme
 
     private final B1BankMapper b1BankMapper;
 
+    private final FeignClientSeataBank2 feignClientSeataBank2;
+
     @Override
     public List<B1Bank> selectBank() {
         List<B1Bank> b1BankList = b1BankMapper.selectList(new LambdaQueryWrapper<B1Bank>());
@@ -34,11 +37,17 @@ public class B1BankServiceImpl extends ServiceImpl<B1BankMapper, B1Bank> impleme
     }
 
     @Override
-    public int updateBank(BigDecimal amount) {
-        int update = b1BankMapper.update(null, new UpdateWrapper<B1Bank>().lambda()
+    public String updateBank(B1Bank inPo) {
+        B1Bank b1Bank = b1BankMapper.selectOne(new LambdaQueryWrapper<B1Bank>()
+                .eq(B1Bank::getAccountNumber, "123"));
+        BigDecimal newBalance = b1Bank.getAccountBalance().subtract(inPo.getAccountBalance());
+        b1BankMapper.update(null, new UpdateWrapper<B1Bank>().lambda()
                 .eq(B1Bank::getAccountNumber, "123")
-                .setSql("account_balance = account_balance + " + amount));
-
-        return update;
+                .set(B1Bank::getAccountBalance, newBalance));
+        int updateBank2 = feignClientSeataBank2.updateBank(inPo);
+        if (updateBank2 == -1) {
+            return "bank2操作失败，请查看日志";
+        }
+        return "转账成功，请查询新余额";
     }
 }
