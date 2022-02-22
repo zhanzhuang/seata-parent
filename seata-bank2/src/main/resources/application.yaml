@@ -7,13 +7,14 @@ spring:
 ---
 spring:
   profiles: dev
+  application:
+    name: seata-bank2
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/seata-bank2?characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-  application:
-    name: seata-bank2
+
 server:
   port: 8081
 mybatis-plus:
