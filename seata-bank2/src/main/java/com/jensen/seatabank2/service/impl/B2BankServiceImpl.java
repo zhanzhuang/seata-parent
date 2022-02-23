@@ -41,7 +41,7 @@ public class B2BankServiceImpl extends ServiceImpl<B2BankMapper, B2Bank> impleme
         int update = b2BankMapper.update(null, new UpdateWrapper<B2Bank>().lambda()
                 .eq(B2Bank::getAccountNumber, "456")
                 .set(B2Bank::getAccountBalance, newBalance));
-        if (update > 0) {
+        if (update < 0) {
             return -1;
         } else {
             return newBalance.intValue();
